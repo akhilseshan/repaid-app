@@ -14,6 +14,9 @@ public class MainActivity extends AppCompatActivity {
     Button pay_button;
     TextView charges, sumAmountField;
 
+    float amount;
+    String vpa;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
         charges = findViewById(R.id.charges);
         sumAmountField = findViewById(R.id.effective_amount);
 
-        String vpa = upi_id.getText().toString();
-        float amount = Float.valueOf(amountField.getText().toString());
+        vpa = upi_id.getText().toString();
+
 
         amountField.addTextChangedListener(new TextWatcher() {
             @Override
@@ -39,7 +42,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                sumAmountField.setText("₹ " + Float.valueOf(amountField.getText().toString()) * 0.02);
+                if (amountField.getText().toString().equals("")) {
+                    amountField.setText("0");
+                }
+                amount = Float.valueOf(amountField.getText().toString());
+                sumAmountField.setText("₹ " + amount * 0.02);
             }
 
             @Override
